@@ -21,7 +21,7 @@ describe VocalCommand do
     allow(command_manager).to receive(:system)
   end
 
-  it "works completly" do
+  it "execute commands said" do
     allow(Notifier).to receive(:system)
     VocalCommand.run(['start'])
     expect(Notifier).to have_received(:system).with(/Vocal command is listening your voice/)
@@ -29,28 +29,42 @@ describe VocalCommand do
     VocalCommand.run(['stop'])
     expect(Notifier).to have_received(:system).with(/Vocal command is analyzing your voice/)
 
-    expect(command_manager).to have_received(:system).with("firefox")
+    expect(command_manager).to have_received(:system).with("firefox &")
+  end
+
+  it "write phrases said is a file" do
+    allow(Notifier).to receive(:system)
+    VocalCommand.run(['start'])
+    expect(Notifier).to have_received(:system).with(/Vocal command is listening your voice/)
+
+    VocalCommand.run(['save'])
+    expect(Notifier).to have_received(:system).with(/Vocal command is writing what you said/)
+
+    expect(File.readlines('result')[0]).to eq "Firefox"
   end
 end
 
 describe VocalCommand do
   let(:audio_recorder) { double }
   let(:command_manager) { double }
+  let(:audio_converter) { double }
+  let(:save_manager) { double }
 
   before do
     hypotheses = double
-    audio_converter = double
 
     allow(Notifier).to receive(:call)
     allow(AudioConverter).to receive(:new).and_return(audio_converter)
     allow(AudioRecorder).to receive(:new).and_return(audio_recorder)
     allow(CommandManager).to receive(:new).with(hypotheses).and_return(command_manager)
+    allow(SaveManager).to receive(:new).with(hypotheses).and_return(save_manager)
 
     allow(audio_recorder).to receive(:stop)
     allow(audio_recorder).to receive(:start)
 
     allow(audio_converter).to receive(:results).and_return(hypotheses)
     allow(command_manager).to receive(:execute)
+    allow(save_manager).to receive(:save)
   end
 
   describe ".run" do
@@ -96,6 +110,25 @@ describe VocalCommand do
 
       it "execute the command received" do
         expect(command_manager).to have_received(:execute)
+      end
+    end
+
+    context "when the command is to save" do
+      before do
+        command = VocalCommand.new(['save'])
+        command.call
+      end
+
+      it "stop to record the voice" do
+        expect(audio_recorder).to have_received(:stop)
+      end
+
+      it "save the file recorded" do
+        expect(save_manager).to have_received(:save)
+      end
+
+      it "show a message" do
+        expect(Notifier).to have_received(:call).twice
       end
     end
 

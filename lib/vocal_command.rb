@@ -2,6 +2,7 @@ require_relative 'notifier'
 require_relative 'audio_converter'
 require_relative 'command_manager'
 require_relative 'audio_recorder'
+require_relative 'save_manager'
 require 'rest_client'
 
 class VocalCommand
@@ -19,7 +20,7 @@ class VocalCommand
   end
 
   def call
-    if command == "start" || command == "stop"
+    if command == "start" || command == "stop" || command == "save"
       send(command)
     else
       show("Command not found")
@@ -37,6 +38,14 @@ class VocalCommand
     audio_recorder.stop
     hypotheses = audio_converter.results
     show(CommandManager.new(hypotheses).execute)
+  end
+
+  def save
+    show("Vocal command is writing what you said")
+    audio_recorder.stop
+    hypotheses = audio_converter.results
+    SaveManager.new(hypotheses).save
+    show("Vocal command has ended to write your voice")
   end
 
   def audio_recorder
