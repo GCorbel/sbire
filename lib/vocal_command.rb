@@ -7,7 +7,10 @@ require 'rest_client'
 
 class VocalCommand
 
-  OUT_FILE = "/home/dougui/rails/vocal_command/.audiofile.flac"
+  BASE_DIRECTORY = "#{Dir.home}/.vocal_command"
+  OUT_FILE = "#{BASE_DIRECTORY}/.audiofile.flac"
+  PID_FILE = "#{BASE_DIRECTORY}/.pid"
+  TEXT_FILE = "#{BASE_DIRECTORY}/vocal_command.txt"
 
   attr_accessor :command
 

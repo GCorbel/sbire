@@ -40,7 +40,7 @@ describe VocalCommand do
     VocalCommand.run(['save'])
     expect(Notifier).to have_received(:system).with(/Vocal command is writing what you said/)
 
-    expect(File.readlines('result')[0]).to eq "Firefox"
+    expect(File.readlines(VocalCommand::TEXT_FILE)[0]).to eq "Firefox"
   end
 end
 
