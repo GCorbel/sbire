@@ -3,6 +3,7 @@ require_relative 'audio_converter'
 require_relative 'command_manager'
 require_relative 'audio_recorder'
 require_relative 'save_manager'
+require_relative 'vocal_config'
 require 'rest_client'
 
 class VocalCommand
@@ -11,6 +12,8 @@ class VocalCommand
   OUT_FILE = "#{BASE_DIRECTORY}/.audiofile.flac"
   PID_FILE = "#{BASE_DIRECTORY}/.pid"
   TEXT_FILE = "#{BASE_DIRECTORY}/vocal_command.txt"
+  CONFIG_PATH = "#{BASE_DIRECTORY}/config.yml"
+  CONFIG = VocalConfig.new(CONFIG_PATH)
 
   attr_accessor :command
 

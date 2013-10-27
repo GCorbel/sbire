@@ -28,6 +28,7 @@ class AudioConverter
   end
 
   def url
-    'https://www.google.com/speech-api/v1/recognize?lang=fr-FR'
+    lang = VocalCommand::CONFIG.lang
+    "https://www.google.com/speech-api/v1/recognize?lang=#{lang}"
   end
 end
