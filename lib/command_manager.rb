@@ -1,11 +1,13 @@
-class CommandManager
-  attr_accessor :hypotheses
+require 'yaml'
 
-  def initialize(hypotheses)
-    @hypotheses = hypotheses
+class CommandManager
+  attr_accessor :commands
+
+  def initialize(path)
+    @commands = YAML.load_file(path) if File.exist?(path)
   end
 
-  def execute
+  def execute(hypotheses)
     command = find(hypotheses)
     system("#{command} &")
     return command
@@ -13,6 +15,8 @@ class CommandManager
 
   private
   def find(hypotheses)
-    hypotheses.first.downcase
+    hypothese = hypotheses.first.downcase
+    commands.each_pair {|key, value| return key if value.include?(hypothese)}
+    return hypothese
   end
 end

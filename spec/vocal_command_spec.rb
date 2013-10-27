@@ -5,7 +5,7 @@ describe VocalCommand do
   let(:out_file) { "/home/dougui/rails/vocal_command/spec/dummy.flac" }
   let(:audio_recorder) {  AudioRecorder.new(out_file) }
   let(:http_request) { Curl::Easy.new('http://www.google.com') }
-  let(:command_manager) { CommandManager.new(['Firefox', 0.8]) }
+  let(:command_manager) { CommandManager.new("spec/fixtures/commands.yml") }
 
   before do
     VocalCommand::OUT_FILE = "/home/dougui/rails/vocal_command/spec/dummy.flac"
@@ -49,14 +49,13 @@ describe VocalCommand do
   let(:command_manager) { double }
   let(:audio_converter) { double }
   let(:save_manager) { double }
+  let(:hypotheses) { double }
 
   before do
-    hypotheses = double
-
     allow(Notifier).to receive(:call)
     allow(AudioConverter).to receive(:new).and_return(audio_converter)
     allow(AudioRecorder).to receive(:new).and_return(audio_recorder)
-    allow(CommandManager).to receive(:new).with(hypotheses).and_return(command_manager)
+    allow(CommandManager).to receive(:new).and_return(command_manager)
     allow(SaveManager).to receive(:new).with(hypotheses).and_return(save_manager)
 
     allow(audio_recorder).to receive(:stop)
@@ -109,7 +108,7 @@ describe VocalCommand do
       end
 
       it "execute the command received" do
-        expect(command_manager).to have_received(:execute)
+        expect(command_manager).to have_received(:execute).with(hypotheses)
       end
     end
 

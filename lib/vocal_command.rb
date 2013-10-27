@@ -13,6 +13,7 @@ class VocalCommand
   PID_FILE = "#{BASE_DIRECTORY}/.pid"
   TEXT_FILE = "#{BASE_DIRECTORY}/vocal_command.txt"
   CONFIG_PATH = "#{BASE_DIRECTORY}/config.yml"
+  COMMAND_PATH = "#{BASE_DIRECTORY}/commands.yml"
   CONFIG = VocalConfig.new(CONFIG_PATH)
 
   attr_accessor :command
@@ -43,7 +44,7 @@ class VocalCommand
     show("Vocal command is analyzing your voice")
     audio_recorder.stop
     hypotheses = audio_converter.results
-    show(CommandManager.new(hypotheses).execute)
+    show(command_manager.execute(hypotheses))
   end
 
   def save
@@ -52,6 +53,10 @@ class VocalCommand
     hypotheses = audio_converter.results
     SaveManager.new(hypotheses).save
     show("Vocal command has ended to write your voice")
+  end
+
+  def command_manager
+    @command_manager ||= CommandManager.new(COMMAND_PATH)
   end
 
   def audio_recorder
