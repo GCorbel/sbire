@@ -10,9 +10,7 @@ In Ubuntu :
     gem install sbire
     mkdir ~\.sbire\
 
-In other systems :
-
-  In the ToDo list
+In other systems : In the ToDo list
 
 ## Usage
 
