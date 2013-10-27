@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
-require 'vocal_command'
-VocalCommand.run(ARGV)
+require 'sbire'
+Sbire.run(ARGV)

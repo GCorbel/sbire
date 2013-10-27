@@ -16,7 +16,9 @@ class CommandManager
   private
   def find(hypotheses)
     hypothese = hypotheses.first.downcase
-    commands.each_pair {|key, value| return key if value.include?(hypothese)}
+    if commands
+      commands.each_pair {|key, value| return key if value.include?(hypothese)}
+    end
     return hypothese
   end
 end
