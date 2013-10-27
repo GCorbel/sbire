@@ -3,18 +3,18 @@ require_relative 'audio_converter'
 require_relative 'command_manager'
 require_relative 'audio_recorder'
 require_relative 'save_manager'
-require_relative 'vocal_config'
+require_relative 'sbire_config'
 require 'rest_client'
 
-class VocalCommand
+class Sbire
 
-  BASE_DIRECTORY = "#{Dir.home}/.vocal_command"
+  BASE_DIRECTORY = "#{Dir.home}/.sbire"
   OUT_FILE = "#{BASE_DIRECTORY}/.audiofile.flac"
   PID_FILE = "#{BASE_DIRECTORY}/.pid"
-  TEXT_FILE = "#{BASE_DIRECTORY}/vocal_command.txt"
+  TEXT_FILE = "#{BASE_DIRECTORY}/sbire.txt"
   CONFIG_PATH = "#{BASE_DIRECTORY}/config.yml"
   COMMAND_PATH = "#{BASE_DIRECTORY}/commands.yml"
-  CONFIG = VocalConfig.new(CONFIG_PATH)
+  CONFIG = SbireConfig.new(CONFIG_PATH)
 
   attr_accessor :command
 
@@ -37,22 +37,22 @@ class VocalCommand
   private
   def start
     audio_recorder.start
-    show("Vocal command is listening your voice")
+    show("Sbire is listening your voice")
   end
 
   def stop
-    show("Vocal command is analyzing your voice")
+    show("Sbire is analyzing your voice")
     audio_recorder.stop
     hypotheses = audio_converter.results
     show(command_manager.execute(hypotheses))
   end
 
   def save
-    show("Vocal command is writing what you said")
+    show("Sbire is writing what you said")
     audio_recorder.stop
     hypotheses = audio_converter.results
     SaveManager.new(hypotheses).save
-    show("Vocal command has ended to write your voice")
+    show("Sbire has ended to write your voice")
   end
 
   def command_manager

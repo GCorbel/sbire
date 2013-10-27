@@ -10,13 +10,13 @@ class AudioRecorder
   end
 
   def stop
-    pid = File.readlines(VocalCommand::PID_FILE)[0]
+    pid = File.readlines(Sbire::PID_FILE)[0]
     system("kill #{pid}")
   end
 
   private
   def write_pid(pid)
-    File.open(VocalCommand::PID_FILE, 'w') {|file| file.write(pid)}
+    File.open(Sbire::PID_FILE, 'w') {|file| file.write(pid)}
   end
 
   def record_audio

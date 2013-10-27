@@ -1,5 +1,5 @@
 require_relative '../lib/audio_converter'
-require_relative '../lib/vocal_command'
+require_relative '../lib/sbire'
 
 describe AudioConverter do
   subject { AudioConverter.new('custom_path') }
@@ -11,7 +11,7 @@ describe AudioConverter do
   describe "#results" do
     it "send the result return by the http request" do
       http_request = double
-      allow(VocalCommand::CONFIG).to receive(:lang).and_return('ab-CD')
+      allow(Sbire::CONFIG).to receive(:lang).and_return('ab-CD')
       allow(Curl::Easy).to receive(:new).and_return(http_request).with('https://www.google.com/speech-api/v1/recognize?lang=ab-CD')
       allow(http_request).to receive(:headers).and_return({})
       allow(http_request).to receive(:post_body=)

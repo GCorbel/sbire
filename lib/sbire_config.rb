@@ -1,6 +1,6 @@
 require 'yaml'
 
-class VocalConfig
+class SbireConfig
   def initialize(path)
     if File.exist?(path)
       @config = YAML.load_file(path)

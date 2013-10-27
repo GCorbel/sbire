@@ -1,14 +1,14 @@
-require_relative '../lib/vocal_command'
+require_relative '../lib/sbire'
 require_relative '../lib/audio_recorder'
 
-describe VocalCommand do
+describe Sbire do
   let(:out_file) { "spec/fitures/audio.flac" }
   let(:audio_recorder) {  AudioRecorder.new(out_file) }
   let(:http_request) { Curl::Easy.new('http://www.google.com') }
   let(:command_manager) { CommandManager.new("spec/fixtures/commands.yml") }
 
   before do
-    VocalCommand::OUT_FILE = "spec/fixtures/audio.flac"
+    Sbire::OUT_FILE = "spec/fixtures/audio.flac"
     allow(AudioRecorder).to receive(:new).and_return(audio_recorder)
     allow(audio_recorder).to receive(:exec).with(/sox/)
     allow(audio_recorder).to receive(:fork).and_yield.and_return(1)
@@ -23,28 +23,28 @@ describe VocalCommand do
 
   it "execute commands said" do
     allow(Notifier).to receive(:system)
-    VocalCommand.run(['start'])
-    expect(Notifier).to have_received(:system).with(/Vocal command is listening your voice/)
+    Sbire.run(['start'])
+    expect(Notifier).to have_received(:system).with(/Sbire is listening your voice/)
 
-    VocalCommand.run(['stop'])
-    expect(Notifier).to have_received(:system).with(/Vocal command is analyzing your voice/)
+    Sbire.run(['stop'])
+    expect(Notifier).to have_received(:system).with(/Sbire is analyzing your voice/)
 
     expect(command_manager).to have_received(:system).with("firefox &")
   end
 
   it "write phrases said is a file" do
     allow(Notifier).to receive(:system)
-    VocalCommand.run(['start'])
-    expect(Notifier).to have_received(:system).with(/Vocal command is listening your voice/)
+    Sbire.run(['start'])
+    expect(Notifier).to have_received(:system).with(/Sbire is listening your voice/)
 
-    VocalCommand.run(['save'])
-    expect(Notifier).to have_received(:system).with(/Vocal command is writing what you said/)
+    Sbire.run(['save'])
+    expect(Notifier).to have_received(:system).with(/Sbire is writing what you said/)
 
-    expect(File.readlines(VocalCommand::TEXT_FILE)[0]).to eq "Firefox"
+    expect(File.readlines(Sbire::TEXT_FILE)[0]).to eq "Firefox"
   end
 end
 
-describe VocalCommand do
+describe Sbire do
   let(:audio_recorder) { double }
   let(:command_manager) { double }
   let(:audio_converter) { double }
@@ -67,25 +67,25 @@ describe VocalCommand do
   end
 
   describe ".run" do
-    it "call an instance of VocalCommand" do
+    it "call an instance of Sbire" do
       argv = double
-      vocal_command = double
+      sbire = double
 
-      allow(VocalCommand).to receive(:new).with(argv).and_return(vocal_command)
-      expect(vocal_command).to receive(:call)
-      VocalCommand.run(argv)
+      allow(Sbire).to receive(:new).with(argv).and_return(sbire)
+      expect(sbire).to receive(:call)
+      Sbire.run(argv)
     end
   end
 
   describe "#call" do
     context "when the command is to start" do
       before do
-        command = VocalCommand.new(['start'])
+        command = Sbire.new(['start'])
         command.call
       end
 
       it "show a message" do
-        expect(Notifier).to have_received(:call).with("Vocal command is listening your voice")
+        expect(Notifier).to have_received(:call).with("Sbire is listening your voice")
       end
 
       it "record the voice" do
@@ -95,7 +95,7 @@ describe VocalCommand do
 
     context "when the command is to stop" do
       before do
-        command = VocalCommand.new(['stop'])
+        command = Sbire.new(['stop'])
         command.call
       end
 
@@ -114,7 +114,7 @@ describe VocalCommand do
 
     context "when the command is to save" do
       before do
-        command = VocalCommand.new(['save'])
+        command = Sbire.new(['save'])
         command.call
       end
 
@@ -133,7 +133,7 @@ describe VocalCommand do
 
     context "when the command doest not exist" do
       it "show a message" do
-        command = VocalCommand.new(["something"])
+        command = Sbire.new(["something"])
         expect(Notifier).to receive(:call).with("Command not found")
         command.call
       end

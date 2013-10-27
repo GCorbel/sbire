@@ -6,6 +6,6 @@ class SaveManager
   end
 
   def save
-    File.open(VocalCommand::TEXT_FILE, 'w') {|file| file.write(hypotheses.first)}
+    File.open(Sbire::TEXT_FILE, 'w') {|file| file.write(hypotheses.first)}
   end
 end

@@ -28,7 +28,7 @@ class AudioConverter
   end
 
   def url
-    lang = VocalCommand::CONFIG.lang
+    lang = Sbire::CONFIG.lang
     "https://www.google.com/speech-api/v1/recognize?lang=#{lang}"
   end
 end

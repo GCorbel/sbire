@@ -6,7 +6,7 @@ describe SaveManager do
 
   it "save to a file" do
     file = double
-    allow(File).to receive(:open).with(VocalCommand::TEXT_FILE, 'w').and_yield(file)
+    allow(File).to receive(:open).with(Sbire::TEXT_FILE, 'w').and_yield(file)
     expect(file).to receive(:write).with('Hello world')
     subject.save
   end
