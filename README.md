@@ -10,23 +10,27 @@ In Ubuntu :
     gem install sbire
     mkdir ~\.sbire\
 
+In other systems :
+
+  In the ToDo list
+
 ## Usage
 
 To execute a command :
 
-  - open a terminal
+  - Open a terminal
   - Type `sbire start`
-  - say the command you want ("Firefox" for example)
-  - type `sbire stop`
-  - the command will be executed
+  - Say the command you want ("Firefox" for example)
+  - Type `sbire stop`
+  - The command will be executed
 
 To write a text file :
 
-  - open a terminal
-  - type `sbire start`
-  - say what you want ("This project rocks" for example)
-  - type `sbire save`
-  - a file will be created in `~\.sbire\sbire.txt`
+  - Open a terminal
+  - Type `sbire start`
+  - Say what you want ("This project rocks" for example)
+  - Type `sbire save`
+  - A file will be created in `~\.sbire\sbire.txt`
 
 ## Configuration
 
@@ -45,9 +49,9 @@ For an obscure reason, Ubuntu does not execute ruby commands binded with a keybo
 
 ## ToDo list
 
-  - make it work with leap motion
-  - make it cross-platform
-  - enable streaming to write texts
+  - Make it work with leap motion
+  - Make it cross-platform
+  - Enable streaming to write texts
 
 ## Contributing
 
