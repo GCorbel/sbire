@@ -2,13 +2,13 @@ require_relative '../lib/vocal_command'
 require_relative '../lib/audio_recorder'
 
 describe VocalCommand do
-  let(:out_file) { "/home/dougui/rails/vocal_command/spec/dummy.flac" }
+  let(:out_file) { "spec/fitures/audio.flac" }
   let(:audio_recorder) {  AudioRecorder.new(out_file) }
   let(:http_request) { Curl::Easy.new('http://www.google.com') }
   let(:command_manager) { CommandManager.new("spec/fixtures/commands.yml") }
 
   before do
-    VocalCommand::OUT_FILE = "/home/dougui/rails/vocal_command/spec/dummy.flac"
+    VocalCommand::OUT_FILE = "spec/fixtures/audio.flac"
     allow(AudioRecorder).to receive(:new).and_return(audio_recorder)
     allow(audio_recorder).to receive(:exec).with(/sox/)
     allow(audio_recorder).to receive(:fork).and_yield.and_return(1)
