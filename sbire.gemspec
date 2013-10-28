@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'sbire'
-  s.version     = '0.0.1'
+  s.version     = '0.0.2'
   s.date        = Date.today
   s.summary     = "The henchman who do what you say"
   s.description = "Sbire is a command line tool that recognize your voice and execute commands linked"
@@ -9,4 +9,6 @@ Gem::Specification.new do |s|
   s.email       = 'guirec.corbel@gmail.com'
   s.files       = Dir.glob("{bin,lib}/*") + %w(README.md)
   s.executables = ['sbire']
+
+  s.add_runtime_dependency = 'curb'
 end
