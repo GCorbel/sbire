@@ -10,5 +10,5 @@ Gem::Specification.new do |s|
   s.files       = Dir.glob("{bin,lib}/*") + %w(README.md)
   s.executables = ['sbire']
 
-  s.add_runtime_dependency = 'curb'
+  s.add_runtime_dependency 'curb'
 end
