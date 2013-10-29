@@ -11,4 +11,5 @@ Gem::Specification.new do |s|
   s.executables = ['sbire']
 
   s.add_runtime_dependency 'curb'
+  s.add_runtime_dependency 'speech2text'
 end
