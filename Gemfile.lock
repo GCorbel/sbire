@@ -3,12 +3,16 @@ GEM
   specs:
     coderay (1.0.9)
     curb (0.8.5)
+    json (1.8.1)
     method_source (0.8.2)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
     slop (3.4.6)
+    speech2text (0.3.6)
+      curb
+      json
 
 PLATFORMS
   ruby
@@ -16,3 +20,4 @@ PLATFORMS
 DEPENDENCIES
   curb
   pry
+  speech2text

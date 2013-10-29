@@ -9,7 +9,7 @@ require 'rest_client'
 class Sbire
 
   BASE_DIRECTORY = "#{Dir.home}/.sbire"
-  OUT_FILE = "#{BASE_DIRECTORY}/.audiofile.flac"
+  OUT_FILE = "#{BASE_DIRECTORY}/.audiofile.wav"
   PID_FILE = "#{BASE_DIRECTORY}/.pid"
   TEXT_FILE = "#{BASE_DIRECTORY}/sbire.txt"
   CONFIG_PATH = "#{BASE_DIRECTORY}/config.yml"

@@ -2,20 +2,18 @@ require_relative '../lib/sbire'
 require_relative '../lib/audio_recorder'
 
 describe Sbire do
-  let(:out_file) { "spec/fitures/audio.flac" }
+  let(:out_file) { "spec/fixtures/audio.wav" }
   let(:audio_recorder) {  AudioRecorder.new(out_file) }
-  let(:http_request) { Curl::Easy.new('http://www.google.com') }
   let(:command_manager) { CommandManager.new("spec/fixtures/commands.yml") }
+  let(:audio_to_text) { double }
 
   before do
-    Sbire::OUT_FILE = "spec/fixtures/audio.flac"
+    Sbire::OUT_FILE = out_file
     allow(AudioRecorder).to receive(:new).and_return(audio_recorder)
     allow(audio_recorder).to receive(:exec).with(/sox/)
     allow(audio_recorder).to receive(:fork).and_yield.and_return(1)
 
-    allow(Curl::Easy).to receive(:new).and_return(http_request)
-    allow(http_request).to receive(:body).and_return('{"status":0,"id":"b42b1c03f647b9ddd6c843268ebee1e6-1","hypotheses":[{"utterance":"Firefox","confidence":0.8}]}')
-    allow(http_request).to receive(:http_post)
+    allow(audio_to_text).to receive(:to_text).and_return('Firefox')
 
     allow(CommandManager).to receive(:new).and_return(command_manager)
     allow(command_manager).to receive(:system)
