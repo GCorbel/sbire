@@ -10,8 +10,9 @@ describe Sbire do
   before do
     Sbire::OUT_FILE = out_file
     allow(AudioRecorder).to receive(:new).and_return(audio_recorder)
-    allow(audio_recorder).to receive(:exec).with(/sox/)
-    allow(audio_recorder).to receive(:fork).and_yield.and_return(1)
+    allow(audio_recorder).to receive(:exec).with(/ffmpeg/)
+    allow(audio_recorder).to receive(:fork).and_yield
+    allow(audio_recorder).to receive(:`).and_return(1)
 
     allow(audio_to_text).to receive(:to_text).and_return('Firefox')
 

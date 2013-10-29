@@ -6,7 +6,7 @@ In french, a "Sbire" is a henchman. It's the guy who do what you say. Sbire is p
 
 In Ubuntu :
 
-    sudo apt-get install sox notify-osd ruby1.9.1
+    sudo apt-get install ffmpeg notify-osd ruby1.9.1
     gem install sbire
     mkdir ~\.sbire\
 
