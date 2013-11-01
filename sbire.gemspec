@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = 'guirec.corbel@gmail.com'
   s.files       = Dir.glob("{bin,lib}/*") + %w(README.md)
   s.executables = ['sbire']
-  s.license     = 'license.md'
+  s.license     = 'MIT'
 
   s.add_runtime_dependency 'curb'
   s.add_runtime_dependency 'speech2text'
