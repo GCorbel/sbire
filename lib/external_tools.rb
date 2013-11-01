@@ -22,15 +22,4 @@ class ExternalTools
     end
   end
 
-  def self.recorder_name
-    case RUBY_PLATFORM
-    when /darwin/
-      "sox"
-    when /linux/
-      "ffmpeg"
-    when /win32/
-      raise NotImplementedError
-    end
-  end
-
 end
