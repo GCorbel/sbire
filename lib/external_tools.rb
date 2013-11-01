@@ -3,7 +3,7 @@ class ExternalTools
   def self.notifier(message)
     case RUBY_PLATFORM
     when /darwin/
-      "terminal-notifier -sende com.apple.Terminal -message #{message}"
+      "terminal-notifier -sender com.apple.Terminal -message #{message}"
     when /linux/
       "notify-send '#{message}'"
     when /win32/
