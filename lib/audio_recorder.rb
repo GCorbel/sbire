@@ -20,7 +20,6 @@ class AudioRecorder
   end
 
   def record_audio
-    fork { exec "ffmpeg -loglevel panic -f alsa -ac 2 -i pulse -y #{path} -r 22050 >/dev/null 2>&1" }
-    `ps aux | grep ffmpeg | grep Sl | grep -v grep | awk -F" " '{print $2}'`
+    fork { exec(ExternalTools.recorder(path)) }
   end
 end

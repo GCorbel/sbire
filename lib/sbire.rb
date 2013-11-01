@@ -4,6 +4,7 @@ require_relative 'command_manager'
 require_relative 'audio_recorder'
 require_relative 'save_manager'
 require_relative 'sbire_config'
+require_relative 'external_tools'
 
 class Sbire
 
