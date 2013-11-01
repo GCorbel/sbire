@@ -1,5 +1,5 @@
 class Notifier
   def self.call(message)
-    system("notify-send '#{message}'")
+    system( ExternalTools.notifier(message) )
   end
 end

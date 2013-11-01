@@ -4,20 +4,22 @@ require_relative '../lib/sbire'
 describe AudioRecorder do
   subject { AudioRecorder.new('custom_path') }
 
+  let(:recorder) { ExternalTools.recorder('custom_path') }
+
   before do
-    allow(subject).to receive(:exec).with(/ffmpeg/)
+    allow(subject).to receive(:exec).with(recorder)
   end
 
   describe "#start" do
     it "record the audio" do
-      expect(subject).to receive(:exec).with(/ffmpeg/)
+      expect(subject).to receive(:exec).with(recorder)
       expect(subject).to receive(:fork).and_yield
       subject.start
     end
 
     it "write the process id" do
       file = double
-      allow(subject).to receive(:`).and_return(1)
+      allow(subject).to receive(:record_audio).and_return(1)
       allow(File).to receive(:open).and_yield(file)
       expect(file).to receive(:write).with(1)
       subject.start
