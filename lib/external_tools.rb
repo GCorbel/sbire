@@ -14,7 +14,7 @@ class ExternalTools
   def self.recorder(path)
     case RUBY_PLATFORM
     when /darwin/
-      "sox -r 22050 -d #{path} >/dev/null 2>&1"
+      "sox -t coreaudio -r 22050 default #{path} -q silence 1 0.1 0.5% 1 1.0 0.5% : newfile : restart"
     when /linux/
       "ffmpeg -loglevel panic -f alsa -ac 2 -i pulse -y #{path} -r 22050 >/dev/null 2>&1"
     when /win32/
