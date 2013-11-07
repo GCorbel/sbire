@@ -3,11 +3,6 @@ require 'fileutils'
 require 'rest_client'
 
 class AudioConverter
-  attr_accessor :audio
-
-  def initialize(file_path)
-  end
-
   def start(&block)
     FileUtils.rm_rf("#{SbireConfig.out_path}/.")
     pid = listen_audio(block)

@@ -7,7 +7,7 @@ describe Sbire do
   let(:out_file) { "#{out_path}/.audiofile" }
   let(:out_path) { "spec/fixtures/out" }
   let(:audio_recorder) {  AudioRecorder.new(out_file) }
-  let(:audio_converter) {  AudioConverter.new(out_file) }
+  let(:audio_converter) {  AudioConverter.new }
   let(:command_manager) { CommandManager.new("spec/fixtures/commands.yml") }
   let(:audio_to_text) { double }
 

@@ -52,7 +52,7 @@ class Sbire
   end
 
   def audio_recorder
-    @audio_recorder ||= AudioRecorder.new(SbireConfig.out_file)
+    @audio_recorder ||= AudioRecorder.new
   end
 
   def audio_converter

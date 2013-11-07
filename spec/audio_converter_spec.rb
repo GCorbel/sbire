@@ -3,7 +3,7 @@ require_relative '../lib/sbire'
 require 'spec_helper'
 
 describe AudioConverter do
-  subject { AudioConverter.new('custom_path') }
+  subject { AudioConverter.new }
 
   let(:audio_to_text) { double }
 
