@@ -9,10 +9,6 @@ class SbireConfig
       "/home/dougui/.sbire"
     end
 
-    def self.tmp_directory
-      "/tmp"
-    end
-
     def self.lang
       config["lang"] ||= "en-US"
     end
@@ -23,14 +19,6 @@ class SbireConfig
 
     def self.out_file
       config["out_file"] ||= "#{out_path}.audiofile"
-    end
-
-    def self.record_pid_file
-      config["record_pid_file"] ||= "#{tmp_directory}/.recorder.pid"
-    end
-
-    def self.converter_pid_file
-      config["converter_pid_file"] ||= "#{tmp_directory}/.converter.pid"
     end
 
     def self.text_file
