@@ -1,4 +1,4 @@
-require_relative '../lib/command_manager'
+require 'command_manager'
 
 describe CommandManager do
   subject { CommandManager.new('spec/fixtures/commands.yml') }

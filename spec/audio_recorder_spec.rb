@@ -1,5 +1,5 @@
-require_relative '../lib/audio_recorder'
-require_relative '../lib/sbire'
+require 'audio_recorder'
+require 'sbire_config'
 
 describe AudioRecorder do
   subject { AudioRecorder.new('custom_path', pid_manager) }

@@ -1,5 +1,5 @@
-require_relative '../lib/save_manager'
-require_relative '../lib/sbire_config'
+require 'save_manager'
+require 'sbire_config'
 
 describe SaveManager do
   subject { SaveManager.new(hypotheses) }

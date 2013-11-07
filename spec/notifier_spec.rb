@@ -1,4 +1,4 @@
-require_relative '../lib/notifier.rb'
+require 'notifier.rb'
 
 describe Notifier do
   describe ".call" do

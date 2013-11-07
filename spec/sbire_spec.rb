@@ -1,5 +1,5 @@
-require_relative '../lib/sbire'
-require_relative '../lib/audio_recorder'
+require 'sbire'
+require 'audio_recorder'
 require 'spec_helper'
 
 describe Sbire do

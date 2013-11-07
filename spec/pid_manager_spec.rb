@@ -1,5 +1,4 @@
-require_relative '../lib/pid_manager'
-require 'spec_helper'
+require 'pid_manager'
 
 describe PidManager do
   describe "#store" do

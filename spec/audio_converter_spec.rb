@@ -1,5 +1,5 @@
-require_relative '../lib/audio_converter'
-require_relative '../lib/sbire'
+require 'audio_converter'
+require 'sbire'
 require 'spec_helper'
 
 describe AudioConverter do
