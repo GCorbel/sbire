@@ -8,9 +8,11 @@ class CommandManager
   end
 
   def execute(hypotheses)
-    command = find(hypotheses)
-    system("#{command} &")
-    return command
+    unless hypotheses.first.empty?
+      command = find(hypotheses)
+      system("#{command} &")
+      return command
+    end
   end
 
   private

@@ -3,10 +3,21 @@ require 'command_manager'
 describe CommandManager do
   subject { CommandManager.new('spec/fixtures/commands.yml') }
   describe "#execute" do
-    it "execute the first command" do
-      hypotheses = ['firefox', 0.8]
-      expect(subject).to receive(:system).with('firefox &')
-      subject.execute(hypotheses)
+
+    context "when there is no hypotheses" do
+      it "do nothing" do
+        hypotheses = ['']
+        expect(subject).to_not receive(:system)
+        subject.execute(hypotheses)
+      end
+    end
+
+    context "when there is hypotheses" do
+      it "execute the first command" do
+        hypotheses = ['firefox', 0.8]
+        expect(subject).to receive(:system).with('firefox &')
+        subject.execute(hypotheses)
+      end
     end
 
     context "search in the commands file" do
