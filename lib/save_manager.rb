@@ -6,6 +6,6 @@ class SaveManager
   end
 
   def save
-    File.open(Sbire::TEXT_FILE, 'w') {|file| file.write(hypotheses.first)}
+    File.open(SbireConfig.new.text_file, 'w') {|file| file.write(hypotheses.first)}
   end
 end

@@ -8,14 +8,6 @@ require 'rest_client'
 
 class Sbire
 
-  BASE_DIRECTORY = "#{Dir.home}/.sbire"
-  OUT_FILE = "#{BASE_DIRECTORY}/.audiofile.wav"
-  PID_FILE = "#{BASE_DIRECTORY}/.pid"
-  TEXT_FILE = "#{BASE_DIRECTORY}/sbire.txt"
-  CONFIG_PATH = "#{BASE_DIRECTORY}/config.yml"
-  COMMAND_PATH = "#{BASE_DIRECTORY}/commands.yml"
-  CONFIG = SbireConfig.new(CONFIG_PATH)
-
   attr_accessor :command
 
   def self.run(argv)
@@ -36,35 +28,35 @@ class Sbire
 
   private
   def start
-    audio_recorder.start
     show("Sbire is listening your voice")
+    audio_recorder.start
+    audio_converter.start { |result| command_manager.execute(result) }
   end
 
   def stop
-    show("Sbire is analyzing your voice")
     audio_recorder.stop
-    hypotheses = audio_converter.results
-    show(command_manager.execute(hypotheses))
+    audio_converter.stop
   end
 
   def save
-    show("Sbire is writing what you said")
-    audio_recorder.stop
-    hypotheses = audio_converter.results
-    SaveManager.new(hypotheses).save
-    show("Sbire has ended to write your voice")
+    show("Sbire is listening your voice")
+    audio_recorder.start
+    FileUtils.rm(SbireConfig.text_file)
+    audio_converter.start do |result|
+      File.open(SbireConfig.text_file, 'ab+') {|f| f.write(result.first + " ") }
+    end
   end
 
   def command_manager
-    @command_manager ||= CommandManager.new(COMMAND_PATH)
+    @command_manager ||= CommandManager.new(SbireConfig.command_path)
   end
 
   def audio_recorder
-    @audio_recorder ||= AudioRecorder.new(OUT_FILE)
+    @audio_recorder ||= AudioRecorder.new(SbireConfig.out_file)
   end
 
   def audio_converter
-    @audio_converter ||= AudioConverter.new(OUT_FILE)
+    @audio_converter ||= AudioConverter.new(SbireConfig.out_file)
   end
 
   def show(message)

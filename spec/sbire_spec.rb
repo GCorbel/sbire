@@ -1,45 +1,60 @@
 require_relative '../lib/sbire'
 require_relative '../lib/audio_recorder'
+require 'spec_helper'
 
 describe Sbire do
-  let(:out_file) { "spec/fixtures/audio.wav" }
+  let(:text_file) { "spec/fixtures/text" }
+  let(:out_file) { "#{out_path}/.audiofile" }
+  let(:out_path) { "spec/fixtures/out" }
   let(:audio_recorder) {  AudioRecorder.new(out_file) }
+  let(:audio_converter) {  AudioConverter.new(out_file) }
   let(:command_manager) { CommandManager.new("spec/fixtures/commands.yml") }
   let(:audio_to_text) { double }
 
   before do
-    Sbire::OUT_FILE = out_file
+    sbire_config = SbireConfig
+    allow(SbireConfig).to receive(:new).and_return(sbire_config)
+    allow(sbire_config).to receive(:base_directory).and_return("./spec/fixtures/")
+
     allow(AudioRecorder).to receive(:new).and_return(audio_recorder)
-    allow(audio_recorder).to receive(:exec).with(/ffmpeg/)
-    allow(audio_recorder).to receive(:fork).and_yield
-    allow(audio_recorder).to receive(:`).and_return(1)
+    allow(audio_recorder).to receive(:exec).with(/sox/)
+    allow(audio_recorder).to receive(:fork).and_yield.and_return(1)
+
+    allow(AudioConverter).to receive(:new).and_return(audio_converter)
 
     allow(audio_to_text).to receive(:to_text).and_return('Firefox')
 
     allow(CommandManager).to receive(:new).and_return(command_manager)
     allow(command_manager).to receive(:system)
+
+    allow(FileUtils).to receive(:rm_rf).with("#{SbireConfig.out_path}/.")
+    allow(Notifier).to receive(:system)
   end
 
   it "execute commands said" do
-    allow(Notifier).to receive(:system)
-    Sbire.run(['start'])
-    expect(Notifier).to have_received(:system).with(/Sbire is listening your voice/)
+    expect(audio_converter).to receive(:fork).and_yield.and_return(2)
+    VCR.use_cassette('synopsis') do
+      Sbire.run(['start'])
+      expect(Notifier).to have_received(:system).with(/Sbire is listening your voice/)
 
-    Sbire.run(['stop'])
-    expect(Notifier).to have_received(:system).with(/Sbire is analyzing your voice/)
-
-    expect(command_manager).to have_received(:system).with("firefox &")
+      expect(command_manager).to have_received(:system).with("chromium-browser &")
+    end
   end
 
   it "write phrases said is a file" do
-    allow(Notifier).to receive(:system)
-    Sbire.run(['start'])
-    expect(Notifier).to have_received(:system).with(/Sbire is listening your voice/)
+    expect(audio_converter).to receive(:fork).and_yield.and_return(2)
+    VCR.use_cassette('synopsis') do
+      Sbire.run(['save'])
+      expect(Notifier).to have_received(:system).with(/Sbire is listening your voice/)
 
-    Sbire.run(['save'])
-    expect(Notifier).to have_received(:system).with(/Sbire is writing what you said/)
+      expect(File.readlines(SbireConfig.text_file)[0]).to eq "chrome "
+    end
+  end
 
-    expect(File.readlines(Sbire::TEXT_FILE)[0]).to eq "Firefox"
+  it "stop all process" do
+    expect(audio_recorder).to receive(:system).with("kill 1")
+    expect(audio_converter).to receive(:system).with("kill 2")
+    Sbire.run(['stop'])
   end
 end
 
@@ -60,7 +75,8 @@ describe Sbire do
     allow(audio_recorder).to receive(:stop)
     allow(audio_recorder).to receive(:start)
 
-    allow(audio_converter).to receive(:results).and_return(hypotheses)
+    allow(audio_converter).to receive(:start)
+    allow(audio_converter).to receive(:stop)
     allow(command_manager).to receive(:execute)
     allow(save_manager).to receive(:save)
   end
@@ -98,35 +114,12 @@ describe Sbire do
         command.call
       end
 
-      it "show a message" do
-        expect(Notifier).to have_received(:call).twice
-      end
-
       it "stop to record the voice" do
         expect(audio_recorder).to have_received(:stop)
       end
 
-      it "execute the command received" do
-        expect(command_manager).to have_received(:execute).with(hypotheses)
-      end
-    end
-
-    context "when the command is to save" do
-      before do
-        command = Sbire.new(['save'])
-        command.call
-      end
-
-      it "stop to record the voice" do
-        expect(audio_recorder).to have_received(:stop)
-      end
-
-      it "save the file recorded" do
-        expect(save_manager).to have_received(:save)
-      end
-
-      it "show a message" do
-        expect(Notifier).to have_received(:call).twice
+      it "stop to listen" do
+        expect(audio_converter).to have_received(:stop)
       end
     end
 

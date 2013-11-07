@@ -10,16 +10,16 @@ class AudioRecorder
   end
 
   def stop
-    pid = File.readlines(Sbire::PID_FILE)[0]
+    pid = File.readlines(SbireConfig.record_pid_file)[0]
     system("kill #{pid}")
   end
 
   private
   def write_pid(pid)
-    File.open(Sbire::PID_FILE, 'w') {|file| file.write(pid)}
+    File.open(SbireConfig.record_pid_file, 'w') {|file| file.write(pid)}
   end
 
   def record_audio
-    fork { exec "ffmpeg -loglevel quiet -f alsa -ac 2 -i pulse -y #{path} -r 22050" }
+    fork { exec "sox -t alsa -r 22050 default #{path}.flac -q silence -l 1 0 1% 1 1.0 1% rate 16k : newfile : restart" }
   end
 end
