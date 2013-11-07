@@ -1,10 +1,10 @@
-require 'notifier'
-require 'audio_converter'
-require 'command_manager'
-require 'audio_recorder'
-require 'save_manager'
-require 'sbire_config'
-require 'pid_manager'
+require_relative 'notifier'
+require_relative 'audio_converter'
+require_relative 'command_manager'
+require_relative 'audio_recorder'
+require_relative 'save_manager'
+require_relative 'sbire_config'
+require_relative 'pid_manager'
 require 'rest_client'
 
 class Sbire
