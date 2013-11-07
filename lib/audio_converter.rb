@@ -19,9 +19,6 @@ class AudioConverter
   end
 
   private
-  def write_pid(pid)
-    File.open(SbireConfig.converter_pid_file, 'w') {|file| file.write(pid)}
-  end
 
   def listen_audio(block)
     fork do
