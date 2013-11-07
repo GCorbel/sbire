@@ -3,15 +3,19 @@ require 'fileutils'
 require 'rest_client'
 
 class AudioConverter
+  attr_accessor :pid_manager
+  def initialize(pid_manager)
+    @pid_manager = pid_manager
+  end
+
   def start(&block)
     FileUtils.rm_rf("#{SbireConfig.out_path}/.")
     pid = listen_audio(block)
-    write_pid(pid)
+    pid_manager.store(self, pid)
   end
 
   def stop
-    pid = File.readlines(SbireConfig.converter_pid_file)[0]
-    system("kill #{pid}")
+    pid_manager.kill(self)
   end
 
   private

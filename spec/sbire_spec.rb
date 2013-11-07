@@ -5,10 +5,10 @@ require 'spec_helper'
 describe Sbire do
   let(:out_file) { "#{out_path}/.audiofile" }
   let(:out_path) { "spec/fixtures/out" }
-  let(:audio_recorder) {  AudioRecorder.new(out_file) }
-  let(:audio_converter) {  AudioConverter.new }
+  let(:audio_recorder) {  AudioRecorder.new(out_file, pid_manager) }
+  let(:audio_converter) {  AudioConverter.new(pid_manager) }
   let(:command_manager) { CommandManager.new("spec/fixtures/commands.yml") }
-  let(:audio_to_text) { double }
+  let(:pid_manager) { PidManager.new }
 
   before do
     allow(SbireConfig).to receive(:base_directory).and_return("./spec/fixtures/")
@@ -18,8 +18,6 @@ describe Sbire do
     allow(audio_recorder).to receive(:fork).and_yield.and_return(1)
 
     allow(AudioConverter).to receive(:new).and_return(audio_converter)
-
-    allow(audio_to_text).to receive(:to_text).and_return('Firefox')
 
     allow(CommandManager).to receive(:new).and_return(command_manager)
     allow(command_manager).to receive(:system)
@@ -49,8 +47,8 @@ describe Sbire do
   end
 
   it "stop all process" do
-    expect(audio_recorder).to receive(:system).with("kill 1")
-    expect(audio_converter).to receive(:system).with("kill 2")
+    expect(pid_manager).to receive(:system).with("kill 1")
+    expect(pid_manager).to receive(:system).with("kill 2")
     Sbire.run(['stop'])
   end
 end

@@ -2,33 +2,32 @@ require_relative '../lib/audio_recorder'
 require_relative '../lib/sbire'
 
 describe AudioRecorder do
-  subject { AudioRecorder.new('custom_path') }
+  subject { AudioRecorder.new('custom_path', pid_manager) }
+
+  let(:pid_manager) { double }
 
   before do
     allow(subject).to receive(:exec).with(/sox/)
+    allow(subject).to receive(:fork).and_yield.and_return(1234)
+    allow(pid_manager).to receive(:store)
     allow(SbireConfig).to receive(:record_pid_file).and_return("./spec/fixtures/.recorder.pid")
   end
 
   describe "#start" do
     it "record the audio" do
       expect(subject).to receive(:exec).with(/sox/)
-      expect(subject).to receive(:fork).and_yield
       subject.start
     end
 
-    it "write the process id" do
-      file = double
-      allow(subject).to receive(:fork).and_return(1)
-      allow(File).to receive(:open).and_yield(file)
-      expect(file).to receive(:write).with(1)
-      subject.start
+    it "store the pid" do
+      expect(pid_manager).to receive(:store).with(subject, 1234)
+      subject.start {}
     end
   end
 
   describe "#stop" do
-    it "kill the process with the readed pid" do
-      allow(File).to receive(:readlines).and_return([1])
-      expect(subject).to receive(:system).with('kill 1')
+    it "kill the process" do
+      expect(pid_manager).to receive(:kill).with(subject)
       subject.stop
     end
   end

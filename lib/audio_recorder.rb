@@ -1,24 +1,20 @@
 class AudioRecorder
-  attr_accessor :path
-  def initialize(path)
+  attr_accessor :path, :pid_manager
+  def initialize(path, pid_manager)
     @path = path
+    @pid_manager = pid_manager
   end
 
   def start
     pid = record_audio
-    write_pid(pid)
+    pid_manager.store(self, pid)
   end
 
   def stop
-    pid = File.readlines(SbireConfig.record_pid_file)[0]
-    system("kill #{pid}")
+    pid_manager.kill(self)
   end
 
   private
-  def write_pid(pid)
-    File.open(SbireConfig.record_pid_file, 'w') {|file| file.write(pid)}
-  end
-
   def record_audio
     fork { exec "sox -t alsa -r 22050 default #{path}.flac -q silence -l 1 0 1% 1 1.0 1% rate 16k : newfile : restart" }
   end

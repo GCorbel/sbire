@@ -3,9 +3,9 @@ require_relative '../lib/sbire'
 require 'spec_helper'
 
 describe AudioConverter do
-  subject { AudioConverter.new }
+  subject { AudioConverter.new(pid_manager) }
 
-  let(:audio_to_text) { double }
+  let(:pid_manager) { double }
 
   before do
     allow(SbireConfig).to receive(:out_path).and_return("./spec/fixtures/out/")
@@ -14,10 +14,11 @@ describe AudioConverter do
     allow(SbireConfig).to receive(:lang).and_return("fr-fr")
   end
 
-  describe  "#start" do
+  describe "#start" do
     before do
       allow(FileUtils).to receive(:rm_rf).with("#{SbireConfig.out_path}/.")
-      allow(subject).to receive(:fork).and_yield
+      allow(subject).to receive(:fork).and_yield.and_return(1234)
+      allow(pid_manager).to receive(:store)
 
       http_body = '{"status":0,"id":"b42b1c03f647b9ddd6c843268ebee1e6-1","hypotheses":[{"utterance":"Firefox","confidence":0.8}]}'
 
@@ -42,6 +43,18 @@ describe AudioConverter do
       text = ''
       subject.start { |result| text += result.first }
       expect(text).to eq 'Firefox'
+    end
+
+    it "store the pid" do
+      expect(pid_manager).to receive(:store).with(subject, 1234)
+      subject.start {}
+    end
+  end
+
+  describe "#stop" do
+    it "kill the process" do
+      expect(pid_manager).to receive(:kill).with(subject)
+      subject.stop
     end
   end
 end

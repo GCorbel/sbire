@@ -4,6 +4,7 @@ require_relative 'command_manager'
 require_relative 'audio_recorder'
 require_relative 'save_manager'
 require_relative 'sbire_config'
+require_relative 'pid_manager'
 require 'rest_client'
 
 class Sbire
@@ -52,14 +53,18 @@ class Sbire
   end
 
   def audio_recorder
-    @audio_recorder ||= AudioRecorder.new
+    @audio_recorder ||= AudioRecorder.new(SbireConfig.out_file, pid_manager)
   end
 
   def audio_converter
-    @audio_converter ||= AudioConverter.new(SbireConfig.out_file)
+    @audio_converter ||= AudioConverter.new(pid_manager)
   end
 
   def show(message)
     Notifier.call(message)
+  end
+
+  def pid_manager
+    @pid_manager ||= PidManager.new
   end
 end
