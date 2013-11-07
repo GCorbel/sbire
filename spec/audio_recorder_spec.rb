@@ -6,9 +6,7 @@ describe AudioRecorder do
 
   before do
     allow(subject).to receive(:exec).with(/sox/)
-    sbire_config = SbireConfig.new
-    allow(SbireConfig).to receive(:new).and_return(sbire_config)
-    allow(sbire_config).to receive(:base_directory).and_return("./spec/fixtures")
+    allow(SbireConfig).to receive(:record_pid_file).and_return("./spec/fixtures/.recorder.pid")
   end
 
   describe "#start" do

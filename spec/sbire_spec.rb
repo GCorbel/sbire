@@ -3,7 +3,6 @@ require_relative '../lib/audio_recorder'
 require 'spec_helper'
 
 describe Sbire do
-  let(:text_file) { "spec/fixtures/text" }
   let(:out_file) { "#{out_path}/.audiofile" }
   let(:out_path) { "spec/fixtures/out" }
   let(:audio_recorder) {  AudioRecorder.new(out_file) }
@@ -12,9 +11,7 @@ describe Sbire do
   let(:audio_to_text) { double }
 
   before do
-    sbire_config = SbireConfig
-    allow(SbireConfig).to receive(:new).and_return(sbire_config)
-    allow(sbire_config).to receive(:base_directory).and_return("./spec/fixtures/")
+    allow(SbireConfig).to receive(:base_directory).and_return("./spec/fixtures/")
 
     allow(AudioRecorder).to receive(:new).and_return(audio_recorder)
     allow(audio_recorder).to receive(:exec).with(/sox/)

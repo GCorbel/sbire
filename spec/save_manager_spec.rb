@@ -6,14 +6,12 @@ describe SaveManager do
   let(:hypotheses) { ['Hello world', 0.8] }
 
   before do
-    sbire_config = double
-    allow(SbireConfig).to receive(:new).and_return(sbire_config)
-    allow(sbire_config).to receive(:text_file).and_return('text_file')
+    allow(SbireConfig).to receive(:text_file).and_return('text_file')
   end
 
   it "save to a file" do
     file = double
-    allow(File).to receive(:open).with(SbireConfig.new.text_file, 'w').and_yield(file)
+    allow(File).to receive(:open).with(SbireConfig.text_file, 'w').and_yield(file)
     expect(file).to receive(:write).with('Hello world')
     subject.save
   end

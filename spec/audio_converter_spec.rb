@@ -8,9 +8,10 @@ describe AudioConverter do
   let(:audio_to_text) { double }
 
   before do
-    sbire_config = SbireConfig
-    allow(SbireConfig).to receive(:new).and_return(sbire_config)
-    allow(sbire_config).to receive(:base_directory).and_return("./spec/fixtures/")
+    allow(SbireConfig).to receive(:out_path).and_return("./spec/fixtures/out/")
+    allow(SbireConfig).to receive(:out_file).and_return("./spec/fixtures/out/.audiofile")
+    allow(SbireConfig).to receive(:converter_pid_file).and_return("./spec/fixtures/.convert.pid")
+    allow(SbireConfig).to receive(:lang).and_return("fr-fr")
   end
 
   describe  "#start" do
