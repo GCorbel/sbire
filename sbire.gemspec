@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'sbire'
-  s.version     = '0.0.3'
+  s.version     = '0.0.4'
   s.date        = Date.today
   s.summary     = "The henchman who do what you say"
   s.description = "Sbire is a command line tool that recognize your voice and execute commands linked"
@@ -11,6 +11,5 @@ Gem::Specification.new do |s|
   s.executables = ['sbire']
   s.license     = 'MIT'
 
-  s.add_runtime_dependency 'curb'
-  s.add_runtime_dependency 'speech2text'
+  s.add_runtime_dependency 'rest-client'
 end
