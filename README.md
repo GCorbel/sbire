@@ -28,7 +28,7 @@ To write a text file :
   - Type `sbire start`
   - Say what you want ("This project rocks" for example)
   - Type `sbire save`
-  - A file will be created in `~\.sbire\sbire.txt`
+  - A file will be created in `~\.sbire\text`
 
 ## Configuration
 
