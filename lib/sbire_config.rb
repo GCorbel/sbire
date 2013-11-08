@@ -6,7 +6,7 @@ class SbireConfig
   end
 
   def self.base_directory
-    "/home/dougui/.sbire"
+    "~/.sbire"
   end
 
   def self.lang
