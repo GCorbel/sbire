@@ -21,6 +21,9 @@ describe Sbire do
     allow(audio_converter).to receive(:stop)
     allow(command_manager).to receive(:execute)
     allow(save_manager).to receive(:save)
+
+    allow(SbireConfig).to receive(:out_file)
+    allow(SbireConfig).to receive(:command_path)
   end
 
   describe ".run" do
@@ -80,10 +83,13 @@ describe Sbire do
 
     context "when the command is to save" do
       let(:command) { Sbire.new(['save']) }
+      let(:text_path) { './spec/fixtures/text' }
 
       before do
         allow(FileUtils).to receive(:rm)
+        allow(FileUtils).to receive(:touch)
         allow(audio_converter).to receive(:start)
+        allow(SbireConfig).to receive(:text_file).and_return(text_path)
       end
 
       it "show a message" do
@@ -101,6 +107,12 @@ describe Sbire do
         expect(audio_converter).to receive(:start).and_yield(data, index)
         expect(save_manager).to receive(:save).with(data, index)
         command.call
+      end
+
+      it "recreate the text file" do
+        File.write(text_path, 'test')
+        command.call
+        expect(File.read(text_path)).to eq ''
       end
     end
   end

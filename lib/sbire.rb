@@ -44,10 +44,14 @@ class Sbire
   def save
     show("Sbire is listening your voice")
     audio_recorder.start
-    FileUtils.rm(SbireConfig.text_file) if File.exists?(SbireConfig.text_file)
+    recreate_text_file
     audio_converter.start do |results, index|
       save_manager.save(results, index) if results
     end
+  end
+
+  def recreate_text_file
+    File.write(SbireConfig.text_file, '')
   end
 
   def command_manager

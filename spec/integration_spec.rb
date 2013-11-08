@@ -14,12 +14,11 @@ describe Sbire do
     allow(SbireConfig).to receive(:base_directory).and_return("./spec/fixtures/")
 
     allow(AudioRecorder).to receive(:new).and_return(audio_recorder)
+    allow(AudioConverter).to receive(:new).and_return(audio_converter)
+    allow(CommandManager).to receive(:new).and_return(command_manager)
+
     allow(audio_recorder).to receive(:exec)
     allow(audio_recorder).to receive(:fork).and_yield.and_return(1)
-
-    allow(AudioConverter).to receive(:new).and_return(audio_converter)
-
-    allow(CommandManager).to receive(:new).and_return(command_manager)
     allow(command_manager).to receive(:system)
 
     allow(FileUtils).to receive(:rm_rf).with("#{SbireConfig.out_path}/.")
