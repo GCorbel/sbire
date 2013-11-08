@@ -31,7 +31,9 @@ class Sbire
   def start
     show("Sbire is listening your voice")
     audio_recorder.start
-    audio_converter.start { |result| command_manager.execute(result) }
+    audio_converter.start do |results, index|
+      command_manager.execute(results, index)
+    end
   end
 
   def stop
@@ -42,9 +44,9 @@ class Sbire
   def save
     show("Sbire is listening your voice")
     audio_recorder.start
-    FileUtils.rm(SbireConfig.text_file)
-    audio_converter.start do |result|
-      File.open(SbireConfig.text_file, 'ab+') {|f| f.write(result.first + " ") }
+    FileUtils.rm(SbireConfig.text_file) if File.exists?(SbireConfig.text_file)
+    audio_converter.start do |results, index|
+      save_manager.save(results, index) if results
     end
   end
 
@@ -58,6 +60,10 @@ class Sbire
 
   def audio_converter
     @audio_converter ||= AudioConverter.new(pid_manager)
+  end
+
+  def save_manager
+    @save_manager ||= SaveManager.new
   end
 
   def show(message)

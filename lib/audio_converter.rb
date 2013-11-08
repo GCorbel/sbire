@@ -21,17 +21,20 @@ class AudioConverter
   private
 
   def listen_audio(block)
+    require 'pry'
     fork do
       index = 1
       stop = false
+      hypotheses = []
 
       while stop == false
-        if File.exist?(filename(index + 1))
-          hypotheses = send_to_google(filename(index))
-          block.call(hypotheses)
-          index += 1
-
-          stop = true if ENV["mode"] == "test"
+        Thread.new(index) do |i|
+          if File.exist?(filename(i + 1))
+            index += 1
+            hypotheses[i - 1] = send_to_google(filename(i))
+            block.call(hypotheses, i - 1)
+            stop = true if ENV["mode"] == "test"
+          end
         end
         sleep 0.1
       end

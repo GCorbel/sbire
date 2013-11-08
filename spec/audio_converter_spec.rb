@@ -39,10 +39,14 @@ describe AudioConverter do
       subject.start {}
     end
 
-    it "yield the result of a http request" do
-      text = ''
-      subject.start { |result| text += result.first }
-      expect(text).to eq 'Firefox'
+    it "yield the history of results" do
+      values, index = nil
+      subject.start do |results, i|
+        values = results
+        index = i
+      end
+      expect(values).to eq [['Firefox', 0.8]]
+      expect(index).to eq 0
     end
 
     it "store the pid" do

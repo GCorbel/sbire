@@ -7,9 +7,10 @@ class CommandManager
     @commands = YAML.load_file(path) if File.exist?(path)
   end
 
-  def execute(hypotheses)
-    unless hypotheses.first.empty?
-      command = find(hypotheses)
+  def execute(hypotheses, index)
+    current_hypothese = hypotheses[index]
+    unless current_hypothese.first.empty?
+      command = find(current_hypothese)
       system("#{command} &")
       return command
     end
