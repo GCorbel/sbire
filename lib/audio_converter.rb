@@ -21,7 +21,6 @@ class AudioConverter
   private
 
   def listen_audio(block)
-    require 'pry'
     fork do
       index = 1
       stop = false
