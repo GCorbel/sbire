@@ -8,7 +8,7 @@ In Ubuntu :
 
     sudo apt-get install sox notify-osd ruby1.9.1
     gem install sbire
-    mkdir ~\.sbire\
+    mkdir -p ~\.sbire\out\
 
 In other systems : In the ToDo list
 
@@ -29,6 +29,8 @@ To write a text file :
   - Say what you want ("This project rocks" for example)
   - Type `sbire save`
   - A file will be created in `~\.sbire\text`
+
+If you want to see what is put in the file in real time, you can do `tail -f ~\.sbire\text`.
 
 ## Configuration
 
