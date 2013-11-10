@@ -39,50 +39,55 @@ describe Sbire do
 
   describe "#call" do
     context "when the command is to start" do
-      let(:command) { Sbire.new(['start']) }
+      subject { Sbire.new(['start']) }
+
+      it "stop all process before to continue" do
+        expect(subject).to receive(:stop)
+        subject.call
+      end
 
       it "show a message" do
         expect(Notifier).to receive(:call).with("Sbire is listening your voice")
-        command.call
+        subject.call
       end
 
       it "record the voice" do
         expect(audio_recorder).to receive(:start)
-        command.call
+        subject.call
       end
 
       it "send data to the command manager" do
         data, index = double, double
         expect(audio_converter).to receive(:start).and_yield(data, index)
         expect(command_manager).to receive(:execute).with(data, index)
-        command.call
+        subject.call
       end
     end
 
     context "when the command is to stop" do
-      let(:command) { Sbire.new(['stop']) }
+      subject { Sbire.new(['stop']) }
 
       it "stop to record the voice" do
         expect(audio_recorder).to receive(:stop)
-        command.call
+        subject.call
       end
 
       it "stop to listen" do
         expect(audio_converter).to receive(:stop)
-        command.call
+        subject.call
       end
     end
 
     context "when the command doest not exist" do
+      subject { Sbire.new(["something"]) }
       it "show a message" do
-        command = Sbire.new(["something"])
         expect(Notifier).to receive(:call).with("Command not found")
-        command.call
+        subject.call
       end
     end
 
     context "when the command is to save" do
-      let(:command) { Sbire.new(['save']) }
+      subject { Sbire.new(['save']) }
       let(:text_path) { './spec/fixtures/text' }
 
       before do
@@ -92,32 +97,37 @@ describe Sbire do
         allow(SbireConfig).to receive(:text_file).and_return(text_path)
       end
 
+      it "stop all process before to continue" do
+        expect(subject).to receive(:stop)
+        subject.call
+      end
+
       it "show a message" do
         expect(Notifier).to receive(:call).with("Sbire is listening your voice")
-        command.call
+        subject.call
       end
 
       it "record the voice" do
         expect(audio_recorder).to receive(:start)
-        command.call
+        subject.call
       end
 
       it "send data to the save manager" do
         data, index = double, double
         expect(audio_converter).to receive(:start).and_yield(data, index)
         expect(save_manager).to receive(:save).with(data, index)
-        command.call
+        subject.call
       end
 
       it "recreate the text file" do
         File.write(text_path, 'test')
-        command.call
+        subject.call
         expect(File.read(text_path)).to eq ''
       end
     end
 
     context "when the command is to install" do
-      let(:command) { Sbire.new(["install"]) }
+      subject { Sbire.new(["install"]) }
 
       before do
         expect(Dir).to receive(:home).and_return("/home")
@@ -128,13 +138,13 @@ describe Sbire do
 
       it "create a .sbire directory in the home directory" do
         expect(FileUtils).to receive(:mkdir_p).with("/home/.sbire/out")
-        command.call
+        subject.call
       end
 
       it "install the config file to the platform" do
         expect(FileUtils).to receive(:copy).
           with("./files/config_mac.yml", "/home/.sbire/config.yml")
-        command.call
+        subject.call
       end
     end
   end

@@ -30,6 +30,7 @@ class Sbire
 
   private
   def start
+    stop
     show("Sbire is listening your voice")
     audio_recorder.start
     audio_converter.start do |results, index|
@@ -43,6 +44,7 @@ class Sbire
   end
 
   def save
+    stop
     show("Sbire is listening your voice")
     audio_recorder.start
     recreate_text_file
