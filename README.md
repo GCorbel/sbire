@@ -4,13 +4,23 @@ In french, a "Sbire" is a henchman. It's the guy who do what you say. Sbire is p
 
 ## Installation
 
-In Ubuntu :
+On linux :
 
     sudo apt-get install sox notify-osd ruby1.9.1
     gem install sbire
-    mkdir -p ~\.sbire\out\
+    sbire install
 
-In other systems : In the ToDo list
+On mac :
+
+    brew install sox
+    gem install sbire
+    sbire install
+
+On windows :
+
+    Install ruby with [RubyInstall](http://rubyinstaller.org/)
+    gem install sbire
+    sbire install
 
 ## Usage
 
@@ -34,7 +44,7 @@ If you want to see what is put in the file in real time, you can do `tail -f ~\.
 
 ## Configuration
 
-By default, the language is en-US. You can change it by adding a file `~\.sbire\config.yml` and put `lang: fr-FR` in it.
+By default, the language is en-us. You can change it by changing the file `~\.sbire\config.yml` and put `lang: fr-FR` in it.
 
 ## Bind phrase and commands
 
@@ -46,12 +56,6 @@ You can bind more complexe phrases with commands by adding a file`~\.sbire\comma
 ## Make a shortcut
 
 For an obscure reason, Ubuntu does not execute ruby commands binded with a keyboard shortcut. You must to install [xbindkeys](http://doc.ubuntu-fr.org/xbindkeys) to make it working.
-
-## ToDo list
-
-  - Make it work with leap motion
-  - Make it cross-platform
-  - Enable streaming to write texts
 
 ## Contributing
 

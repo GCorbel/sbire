@@ -1,5 +1,8 @@
+require_relative 'sbire_config'
+
 class Notifier
   def self.call(message)
-    system("notify-send '#{message}'")
+    command = SbireConfig.notify_command % { message: message }
+    system(command)
   end
 end

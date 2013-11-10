@@ -5,6 +5,7 @@ require_relative 'audio_recorder'
 require_relative 'save_manager'
 require_relative 'sbire_config'
 require_relative 'pid_manager'
+require_relative 'os'
 require 'rest_client'
 
 class Sbire
@@ -20,7 +21,7 @@ class Sbire
   end
 
   def call
-    if command == "start" || command == "stop" || command == "save"
+    if ["start", "stop", "save", "install"].include?(command)
       send(command)
     else
       show("Command not found")
@@ -48,6 +49,13 @@ class Sbire
     audio_converter.start do |results, index|
       save_manager.save(results, index) if results
     end
+  end
+
+  def install
+    home = Dir.home
+    config_file = "config_#{OS.familly}.yml"
+    FileUtils.mkdir_p("#{home}/.sbire/out")
+    FileUtils.copy("./files/#{config_file}", "#{home}/.sbire/config.yml")
   end
 
   def recreate_text_file

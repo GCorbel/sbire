@@ -6,7 +6,7 @@ class SbireConfig
   end
 
   def self.base_directory
-    "~/.sbire"
+    "#{Dir.home}/.sbire"
   end
 
   def self.lang
@@ -27,6 +27,10 @@ class SbireConfig
 
   def self.command_path
     config["command_path"] ||= "#{base_directory}/commands.yml"
+  end
+
+  def self.notify_command
+    config["notify_command"]
   end
 
   private

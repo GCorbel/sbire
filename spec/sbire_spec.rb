@@ -115,5 +115,27 @@ describe Sbire do
         expect(File.read(text_path)).to eq ''
       end
     end
+
+    context "when the command is to install" do
+      let(:command) { Sbire.new(["install"]) }
+
+      before do
+        expect(Dir).to receive(:home).and_return("/home")
+        allow(FileUtils).to receive(:copy)
+        allow(FileUtils).to receive(:mkdir_p)
+        expect(OS).to receive(:familly).and_return("mac")
+      end
+
+      it "create a .sbire directory in the home directory" do
+        expect(FileUtils).to receive(:mkdir_p).with("/home/.sbire/out")
+        command.call
+      end
+
+      it "install the config file to the platform" do
+        expect(FileUtils).to receive(:copy).
+          with("./files/config_mac.yml", "/home/.sbire/config.yml")
+        command.call
+      end
+    end
   end
 end
