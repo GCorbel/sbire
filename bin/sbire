@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
 require_relative '../lib/sbire'
-Sbire.run(ARGV)
+Sbire::Command.new(ARGV).call
