@@ -57,7 +57,9 @@ class Sbire
     home = Dir.home
     config_file = "config_#{OS.familly}.yml"
     FileUtils.mkdir_p("#{home}/.sbire/out")
-    FileUtils.copy("./files/#{config_file}", "#{home}/.sbire/config.yml")
+    dirname = File.dirname(__FILE__)
+    path = "#{dirname}/../files/#{config_file}"
+    FileUtils.copy(path, "#{home}/.sbire/config.yml")
   end
 
   def recreate_text_file
