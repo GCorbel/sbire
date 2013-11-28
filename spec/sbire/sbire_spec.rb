@@ -144,7 +144,8 @@ module Sbire
 
         it "install the config file to the platform" do
           expect(FileUtils).to receive(:copy).
-            with("./files/config_mac.yml", "/home/.sbire/config.yml")
+            with("/home/dougui/rails/sbire/lib/sbire/../files/config_mac.yml",
+                 "/home/.sbire/config.yml")
           subject.call
         end
       end
