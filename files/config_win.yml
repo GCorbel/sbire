@@ -1,2 +1,3 @@
 lang: "en-us"
 notify_command: "echo '%{message}'"
+pipe_command: "echo '%{text}'"

@@ -1,2 +1,3 @@
 lang: "en-us"
 notify_command: "terminal-notifier -sender com.apple.Terminal -message %{message}"
+pipe_command: "xdotool type '%{text}'"

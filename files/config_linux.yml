@@ -1,2 +1,3 @@
 lang: "en-us"
 notify_command: "notify-send '%{message}'"
+pipe_command: "xdotool type '%{text}'"
