@@ -1,2 +1,3 @@
 lang: "fr-FR"
 notify_command: "notify-send '%{message}'"
+pipe_command: "pipe '%{text}'"

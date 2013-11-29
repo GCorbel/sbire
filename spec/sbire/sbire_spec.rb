@@ -6,6 +6,7 @@ module Sbire
     let(:command_manager) { double }
     let(:audio_converter) { double }
     let(:save_manager) { double }
+    let(:pipe_manager) { double }
     let(:hypotheses) { double }
 
     before do
@@ -14,6 +15,7 @@ module Sbire
       allow(AudioRecorder).to receive(:new).and_return(audio_recorder)
       allow(CommandManager).to receive(:new).and_return(command_manager)
       allow(SaveManager).to receive(:new).and_return(save_manager)
+      allow(PipeManager).to receive(:new).and_return(pipe_manager)
 
       allow(audio_recorder).to receive(:stop)
       allow(audio_recorder).to receive(:start)
@@ -22,6 +24,7 @@ module Sbire
       allow(audio_converter).to receive(:stop)
       allow(command_manager).to receive(:execute)
       allow(save_manager).to receive(:save)
+      allow(pipe_manager).to receive(:pipe)
 
       allow(SbireConfig).to receive(:out_file)
       allow(SbireConfig).to receive(:command_path)
@@ -146,6 +149,32 @@ module Sbire
           expect(FileUtils).to receive(:copy).
             with("/home/dougui/rails/sbire/lib/sbire/../../files/config_mac.yml",
                  "/home/.sbire/config.yml")
+          subject.call
+        end
+      end
+
+      context "when the command is to pipe" do
+        subject { Command.new(["pipe"]) }
+
+        it "stop all process before to continue" do
+          expect(subject).to receive(:stop)
+          subject.call
+        end
+
+        it "show a message" do
+          expect(Notifier).to receive(:call).with("Sbire is listening your voice")
+          subject.call
+        end
+
+        it "record the voice" do
+          expect(audio_recorder).to receive(:start)
+          subject.call
+        end
+
+        it "send data to the pipe manager" do
+          data, index = double, double
+          expect(audio_converter).to receive(:start).and_yield(data, index)
+          expect(pipe_manager).to receive(:pipe).with(data, index)
           subject.call
         end
       end

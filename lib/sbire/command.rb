@@ -12,7 +12,7 @@ module Sbire
     end
 
     def call
-      if ["start", "stop", "save", "install"].include?(command)
+      if ["start", "stop", "save", "install", "pipe"].include?(command)
         send(command)
       else
         show("Command not found")
@@ -44,6 +44,15 @@ module Sbire
       end
     end
 
+    def pipe
+      stop
+      show("Sbire is listening your voice")
+      audio_recorder.start
+      audio_converter.start do |results, index|
+        pipe_manager.pipe(results, index) if results
+      end
+    end
+
     def install
       home = Dir.home
       config_file = "config_#{OS.familly}.yml"
@@ -71,6 +80,10 @@ module Sbire
 
     def save_manager
       @save_manager ||= SaveManager.new
+    end
+
+    def pipe_manager
+      @pipe_manager ||= PipeManager.new
     end
 
     def show(message)

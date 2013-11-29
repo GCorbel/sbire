@@ -34,6 +34,10 @@ module Sbire
       config["notify_command"]
     end
 
+    def self.pipe_command
+      config["pipe_command"]
+    end
+
     private
 
     def self.config

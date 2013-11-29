@@ -1,8 +1,8 @@
 module Sbire
-  class SaveManager
-    def save(hypotheses, index)
+  class PipeManager
+    def pipe(hypotheses, index)
       stream_manager.execute(hypotheses, index) do |result|
-        append_to_file(result)
+        send_command(result)
       end
     end
 
@@ -12,8 +12,9 @@ module Sbire
       @stream_manager ||= StreamManager.new
     end
 
-    def append_to_file(text)
-      File.open(SbireConfig.text_file, 'ab+') {|file| file.write(text)}
+    def send_command(text)
+      command = SbireConfig.pipe_command % { text: text }
+      system(command)
     end
   end
 end
