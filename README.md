@@ -6,13 +6,14 @@
 
 Linux :
 
-    sudo apt-get install sox notify-osd ruby1.9.1
+    sudo apt-get install sox notify-osd ruby1.9.1 xdotool
     gem install sbire
     sbire install
 
 OSX:
 
     brew install sox
+    sudo port install xdotool
     gem install sbire
     sbire install
 
