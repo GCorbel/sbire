@@ -1,22 +1,22 @@
 # Sbire
 
-In french, a "Sbire" is a henchman. It's the guy who do what you say. Sbire is program which is capable to listen what you said and execute the command associated.
+"Sbire" is the French word for henchman. Sbire is program which is capable to listen what you said and execute the command associated.
 
 ## Installation
 
-On linux :
+Linux :
 
     sudo apt-get install sox notify-osd ruby1.9.1
     gem install sbire
     sbire install
 
-On mac :
+OSX:
 
     brew install sox
     gem install sbire
     sbire install
 
-On windows :
+Windows :
 
     Install ruby with [RubyInstall](http://rubyinstaller.org/)
     gem install sbire
@@ -24,11 +24,11 @@ On windows :
 
 ## Usage
 
-To execute a command :
+To run a command :
 
   - Open a terminal
   - Type `sbire start`
-  - Say the command you want ("Firefox" for example)
+  - Say the command ("Firefox" for example)
   - Type `sbire stop`
   - The command will be executed
 
@@ -36,26 +36,29 @@ To write a text file :
 
   - Open a terminal
   - Type `sbire start`
-  - Say what you want ("This project rocks" for example)
+  - Say the text ("This project rocks" for example)
   - Type `sbire save`
   - A file will be created in `~\.sbire\text`
 
-If you want to see what is put in the file in real time, you can do `tail -f ~\.sbire\text`.
+If you want to see what is written in the file in real time, run `tail -f ~\.sbire\text`.
 
 ## Configuration
 
-By default, the language is en-us. You can change it by changing the file `~\.sbire\config.yml` and put `lang: fr-FR` in it.
+By default, the language is en-us. You can change it by adding a `~\.sbire\config.yml` file. For example. to set it to French, write:
+```
+lang: fr-FR`
+```
 
 ## Bind phrase and commands
 
-You can bind more complexe phrases with commands by adding a file`~\.sbire\commands.yml` and put in it something like this :
-
+You can bind more complexe phrases with commands by adding a `~\.sbire\commands.yml` file and write for example:
+```
     "chromium-browser": ["open chrome", "chrome"]
     "skype": "open skype"
+```
+## Add a shortcut
 
-## Make a shortcut
-
-For an obscure reason, Ubuntu does not execute ruby commands binded with a keyboard shortcut. You must to install [xbindkeys](http://doc.ubuntu-fr.org/xbindkeys) to make it working.
+For some obscure reason, Ubuntu does not run ruby commands binded with a keyboard shortcut. You must install [xbindkeys](http://doc.ubuntu-fr.org/xbindkeys) to make it work.
 
 ## Contributing
 
