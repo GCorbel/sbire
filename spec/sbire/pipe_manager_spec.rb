@@ -1,6 +1,4 @@
-require 'sbire/pipe_manager'
-require 'sbire/sbire_config'
-require 'sbire/stream_manager'
+require 'spec_helper'
 
 module Sbire
   describe PipeManager do

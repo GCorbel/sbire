@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'sbire'
 
 module Sbire
   describe Command do

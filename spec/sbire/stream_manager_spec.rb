@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'sbire/stream_manager'
 
 module Sbire
   describe StreamManager do

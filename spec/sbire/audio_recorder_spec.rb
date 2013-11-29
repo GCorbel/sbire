@@ -1,6 +1,4 @@
 require 'spec_helper'
-require 'sbire/audio_recorder'
-require 'sbire/sbire_config'
 
 module Sbire
   describe AudioRecorder do

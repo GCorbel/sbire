@@ -1,7 +1,4 @@
 require 'spec_helper'
-require 'sbire/save_manager'
-require 'sbire/sbire_config'
-require 'sbire/stream_manager'
 
 module Sbire
   describe SaveManager do

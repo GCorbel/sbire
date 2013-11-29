@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'sbire/notifier.rb'
 
 module Sbire
   describe Notifier do
