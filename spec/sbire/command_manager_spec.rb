@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'sbire/command_manager'
 
 module Sbire

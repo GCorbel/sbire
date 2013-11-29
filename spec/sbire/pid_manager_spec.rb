@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'sbire/pid_manager'
 
 module Sbire

@@ -7,7 +7,11 @@ module Sbire
     end
 
     def self.base_directory
-      "#{Dir.home}/.sbire"
+      if ENV["mode"] == "test"
+        "./spec/fixtures"
+      else
+        "#{Dir.home}/.sbire"
+      end
     end
 
     def self.lang

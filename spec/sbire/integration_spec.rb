@@ -1,6 +1,5 @@
-require 'sbire'
-require 'sbire/audio_recorder'
 require 'spec_helper'
+require 'sbire'
 
 module Sbire
   describe Command do
@@ -13,8 +12,6 @@ module Sbire
     let(:pipe_manager) { PipeManager.new }
 
     before do
-      allow(SbireConfig).to receive(:base_directory).and_return("./spec/fixtures/")
-
       allow(AudioRecorder).to receive(:new).and_return(audio_recorder)
       allow(AudioConverter).to receive(:new).and_return(audio_converter)
       allow(CommandManager).to receive(:new).and_return(command_manager)

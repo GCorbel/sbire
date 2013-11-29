@@ -1,6 +1,6 @@
+require 'spec_helper'
 require 'sbire/audio_converter'
 require 'sbire'
-require 'spec_helper'
 
 module Sbire
   describe AudioConverter do
