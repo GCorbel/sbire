@@ -1,4 +1,5 @@
 # Sbire
+[![Code Climate](https://codeclimate.com/github/GCorbel/sbire.png)](https://codeclimate.com/github/GCorbel/sbire)
 
 "Sbire" is the French word for henchman. Sbire is program which is capable to listen what you said and execute the command associated.
 
