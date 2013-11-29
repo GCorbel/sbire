@@ -54,15 +54,15 @@ If you want to see what is written in the file in real time, run `tail -f ~\.sbi
 
 By default, the language is en-us. You can change it by changing the value of `lang` by your language. For example, to set it to French, write:
 ```
-lang: fr-FR`
+lang: fr-FR
 ```
 
 ## Bind phrase and commands
 
 You can bind more complexe phrases with commands by adding a `~\.sbire\commands.yml` file and write for example:
 ```
-    "chromium-browser": ["open chrome", "chrome"]
-    "skype": "open skype"
+"chromium-browser": ["open chrome", "chrome"]
+"skype": "open skype"
 ```
 
 ## Pipe the text with a custom command
