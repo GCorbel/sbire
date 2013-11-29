@@ -49,7 +49,7 @@ module Sbire
       config_file = "config_#{OS.familly}.yml"
       FileUtils.mkdir_p("#{home}/.sbire/out")
       dirname = File.dirname(__FILE__)
-      path = "#{dirname}/../files/#{config_file}"
+      path = "#{dirname}/../../files/#{config_file}"
       FileUtils.copy(path, "#{home}/.sbire/config.yml")
     end
 
