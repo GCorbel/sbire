@@ -1,25 +1,13 @@
+require_relative 'sbire_config'
+require 'thor'
+
 module Sbire
-  class Command
+  class Command < Thor
+    package_name "Sbire"
 
     attr_accessor :command
 
-    def self.run(argv)
-      self.new(argv).call
-    end
-
-    def initialize(argv)
-      @command = argv.first
-    end
-
-    def call
-      if ["start", "stop", "save", "install", "pipe"].include?(command)
-        send(command)
-      else
-        show("Command not found")
-      end
-    end
-
-    private
+    desc "start", "Start to listening your voice and execute associated commands"
     def start
       stop
       show("Sbire is listening your voice")
@@ -29,11 +17,13 @@ module Sbire
       end
     end
 
+    desc "stop", "Stop all dependencies of Sbire"
     def stop
       audio_recorder.stop
       audio_converter.stop
     end
 
+    desc "save", "Save what you say in #{SbireConfig.text_file}. You can customize the path by edition #{SbireConfig.command_path}"
     def save
       stop
       show("Sbire is listening your voice")
@@ -44,6 +34,7 @@ module Sbire
       end
     end
 
+    desc "pipe", "Send what you say to another command. You can customize the commd by editing #{SbireConfig.command_path}"
     def pipe
       stop
       show("Sbire is listening your voice")
@@ -53,6 +44,7 @@ module Sbire
       end
     end
 
+    desc "install", "Install Sbire"
     def install
       home = Dir.home
       config_file = "config_#{OS.familly}.yml"
@@ -61,6 +53,8 @@ module Sbire
       path = "#{dirname}/../../files/#{config_file}"
       FileUtils.copy(path, "#{home}/.sbire/config.yml")
     end
+
+    private
 
     def recreate_text_file
       File.write(SbireConfig.text_file, '')

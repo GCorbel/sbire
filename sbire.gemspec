@@ -12,4 +12,5 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
 
   s.add_runtime_dependency 'rest-client'
+  s.add_runtime_dependency 'thor'
 end

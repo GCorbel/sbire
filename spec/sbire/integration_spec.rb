@@ -34,7 +34,7 @@ module Sbire
     it "execute commands said" do
       expect(audio_converter).to receive(:fork).and_yield.and_return(2)
       VCR.use_cassette('synopsis') do
-        Command.run(['start'])
+        subject.start
         expect(Notifier).to have_received(:system).with(/Sbire is listening your voice/)
 
         expect(command_manager).to have_received(:system).with("chromium-browser &")
@@ -44,7 +44,7 @@ module Sbire
     it "write phrases said is a file" do
       expect(audio_converter).to receive(:fork).and_yield.and_return(2)
       VCR.use_cassette('synopsis') do
-        Command.run(['save'])
+        subject.save
         expect(Notifier).to have_received(:system).with(/Sbire is listening your voice/)
 
         expect(File.readlines(SbireConfig.text_file)[0]).to eq "chrome "
@@ -54,7 +54,7 @@ module Sbire
     it "send phrases said to another command" do
       expect(audio_converter).to receive(:fork).and_yield.and_return(2)
       VCR.use_cassette('synopsis') do
-        Command.run(['pipe'])
+        subject.pipe
         expect(Notifier).to have_received(:system).with(/Sbire is listening your voice/)
         expect(pipe_manager).to have_received(:system).with("pipe 'chrome '")
       end
@@ -63,8 +63,7 @@ module Sbire
     it "stop all process" do
       expect(pid_manager).to receive(:system).with("kill 1")
       expect(pid_manager).to receive(:system).with("kill 2")
-      Command.run(['stop'])
+      subject.stop
     end
   end
-
 end
