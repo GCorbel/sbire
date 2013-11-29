@@ -60,8 +60,16 @@ module Sbire
     end
 
     def read_response(text)
-      data = JSON.parse(text)
-      data['hypotheses'].map {|ut| [ut['utterance'], ut['confidence']] }.first
+      if text.empty?
+        empty_result
+      else
+        data = JSON.parse(text)
+        data['hypotheses'].map {|ut| [ut['utterance'], ut['confidence']] }.first
+      end
+    end
+
+    def empty_result
+      ['', 0]
     end
 
     def url
