@@ -1,6 +1,11 @@
 require 'rest_client'
 require 'thor'
+require 'json'
+require 'fileutils'
+require 'rest_client'
+require 'yaml'
 
+require_relative 'sbire/sbire_config'
 require_relative 'sbire/command'
 require_relative 'sbire/notifier'
 require_relative 'sbire/audio_converter'

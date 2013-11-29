@@ -1,7 +1,3 @@
-require 'json'
-require 'fileutils'
-require 'rest_client'
-
 module Sbire
   class AudioConverter
     attr_accessor :pid_manager

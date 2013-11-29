@@ -1,6 +1,3 @@
-require_relative 'sbire_config'
-require 'thor'
-
 module Sbire
   class Command < Thor
     package_name "Sbire"

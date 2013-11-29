@@ -1,5 +1,3 @@
-require 'yaml'
-
 module Sbire
   class SbireConfig
     def self.config_path

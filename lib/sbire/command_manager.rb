@@ -1,5 +1,3 @@
-require 'yaml'
-
 module Sbire
   class CommandManager
     attr_accessor :commands
