@@ -1,5 +1,5 @@
 require 'sbire'
-require 'audio_recorder'
+require 'sbire/audio_recorder'
 require 'spec_helper'
 
 module Sbire
