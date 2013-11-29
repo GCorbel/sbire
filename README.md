@@ -29,22 +29,29 @@ To run a command :
   - Open a terminal
   - Type `sbire start`
   - Say the command ("Firefox" for example)
-  - Type `sbire stop`
   - The command will be executed
+
+To write where your cursor is :
+
+  - Open a terminal
+  - Type `sbire pipe`
+  - Say the text ("This project rocks" for example)
+  - It will write the text where your cursor is
 
 To write a text file :
 
   - Open a terminal
-  - Type `sbire start`
-  - Say the text ("This project rocks" for example)
   - Type `sbire save`
+  - Say the text ("This project rocks" for example)
   - A file will be created in `~\.sbire\text`
+
+To stop sbire, type `sbire stop`.
 
 If you want to see what is written in the file in real time, run `tail -f ~\.sbire\text`.
 
 ## Configuration
 
-By default, the language is en-us. You can change it by adding a `~\.sbire\config.yml` file. For example. to set it to French, write:
+By default, the language is en-us. You can change it by changing the value of `lang` by your language. For example, to set it to French, write:
 ```
 lang: fr-FR`
 ```
@@ -56,6 +63,11 @@ You can bind more complexe phrases with commands by adding a `~\.sbire\commands.
     "chromium-browser": ["open chrome", "chrome"]
     "skype": "open skype"
 ```
+
+## Pipe the text with a custom command
+
+By default, when you use `sbire pipe`, it will use a command to emulate the keyboard. You can change it by editing the file `~\.sbire\config.yml` and change the value of `pipe_command` by anything you want.
+
 ## Add a shortcut
 
 For some obscure reason, Ubuntu does not run ruby commands binded with a keyboard shortcut. You must install [xbindkeys](http://doc.ubuntu-fr.org/xbindkeys) to make it work.
