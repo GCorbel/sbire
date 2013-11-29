@@ -47,7 +47,12 @@ module Sbire
         response = RestClient.post url,
           file,
           content_type: 'audio/x-flac; rate=16000'
-        read_response(response.to_str) if response.code == 200
+        response = read_response(response.to_str) if response.code == 200
+        if response
+          return response
+        else
+          return empty_result
+        end
       rescue => e
         puts e
         return [""]
@@ -60,7 +65,7 @@ module Sbire
     end
 
     def read_response(text)
-      if text.empty?
+      if text && text.empty?
         empty_result
       else
         data = JSON.parse(text)
