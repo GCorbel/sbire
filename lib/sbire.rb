@@ -1,3 +1,6 @@
+require 'rest_client'
+require 'thor'
+
 require_relative 'sbire/command'
 require_relative 'sbire/notifier'
 require_relative 'sbire/audio_converter'
@@ -8,4 +11,3 @@ require_relative 'sbire/pipe_manager'
 require_relative 'sbire/stream_manager'
 require_relative 'sbire/pid_manager'
 require_relative 'sbire/os'
-require 'rest_client'

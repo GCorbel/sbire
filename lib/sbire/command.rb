@@ -23,7 +23,7 @@ module Sbire
       audio_converter.stop
     end
 
-    desc "save", "Save what you say in #{SbireConfig.text_file}. You can customize the path by edition #{SbireConfig.command_path}"
+    desc "save", "Save what you say in ~/.sbire/text. You can customize the path by edition ~/.sbire/config.yml"
     def save
       stop
       show("Sbire is listening your voice")
@@ -34,7 +34,7 @@ module Sbire
       end
     end
 
-    desc "pipe", "Send what you say to another command. You can customize the commd by editing #{SbireConfig.command_path}"
+    desc "pipe", "Send what you say to another command. You can customize the commd by editing ~/.sbire/config.yml"
     def pipe
       stop
       show("Sbire is listening your voice")
