@@ -3,6 +3,10 @@
 
 "Sbire" is the French word for henchman. Sbire is program which is capable to listen what you said and execute the command associated.
 
+## How it works
+
+Sbire is using sox to record the voice and send files recorded to Google speech-api. Google speech-api analyze your voice and return corresponding words. The rest of the application is a simple ruby code. To emulate streaming, the record is splitted in many short files.
+
 ## Installation
 
 Linux :
